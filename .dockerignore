@@ -1,0 +1,8 @@
+# Exclude files and directories from the build context
+.git
+node_modules
+vendor
+*.log
+*.tmp
+*.swp
+*.out
