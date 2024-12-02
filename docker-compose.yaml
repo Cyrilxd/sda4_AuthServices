@@ -1,0 +1,12 @@
+version: "1.0"
+
+services:
+  auth-service:
+    build:
+      context: .  # Use the current directory as the build context
+      dockerfile: Dockerfile  # Specify the Dockerfile to use
+    ports:
+      - "8080:8080"  # Map container port 8080 to host port 8080
+    environment:
+      DEBUG: "true"  # Example of passing environment variables
+    command: ["./auth-service", "--debug"]  # Pass runtime arguments
