@@ -13,8 +13,8 @@ RUN go mod download
 # Copy the rest of the application code
 COPY . .
 
-# Build the Go application
-RUN go build -o auth-service ./cmd/main.go
+# Build the Go application for Linux
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth-service ./cmd/main.go
 
 # Use a minimal base image for the final container
 FROM alpine:latest
