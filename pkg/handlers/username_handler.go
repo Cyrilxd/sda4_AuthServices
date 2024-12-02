@@ -7,6 +7,16 @@ import (
 )
 
 // LoginHandler authenticates users with username and password
+// @Summary Authenticate a user
+// @Description Authenticates a user using their username and password
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param credentials body struct{Username string `json:"username"`; Password string `json:"password"`} true "User credentials"
+// @Success 200 {object} map[string]string "Login successful message"
+// @Failure 400 {object} map[string]string "Invalid request payload"
+// @Failure 401 {object} map[string]string "Invalid credentials"
+// @Router /auth/login [post]
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Username string `json:"username"`
@@ -26,6 +36,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // ProfileHandler returns user profile for authenticated users
+// @Summary Get user profile
+// @Description Retrieves profile information for the authenticated user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} map[string]string "User profile data"
+// @Failure 401 {object} map[string]string "Unauthorized access"
+// @Router /user/profile [get]
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	// Simulated profile data
 	w.WriteHeader(http.StatusOK)
@@ -33,6 +51,16 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // RegisterUserHandler handles user registration requests
+// @Summary Register a new user
+// @Description Creates a new user in the system
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param user body struct{Username string `json:"username"`; Password string `json:"password"`} true "User credentials"
+// @Success 201 {object} map[string]string "User registered successfully"
+// @Failure 400 {object} map[string]string "Invalid request payload"
+// @Failure 500 {object} map[string]string "Failed to register user"
+// @Router /auth/register [post]
 func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Define a structure to parse the incoming JSON request
 	var req struct {
