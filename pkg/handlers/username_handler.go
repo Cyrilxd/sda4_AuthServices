@@ -31,3 +31,38 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"username": "test_user", "role": "admin"})
 }
+
+// RegisterUserHandler handles user registration requests
+func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
+	// Define a structure to parse the incoming JSON request
+	var req struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	// Decode the JSON request
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	// Check if username and password are provided
+	if req.Username == "" || req.Password == "" {
+		http.Error(w, "Username and password are required", http.StatusBadRequest)
+		return
+	}
+
+	// Register the user using the RegisterUser function
+	err := auth.RegisterUser(req.Username, req.Password)
+	if err != nil {
+		http.Error(w, "Failed to register user", http.StatusInternalServerError)
+		return
+	}
+
+	// Respond with a success message
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{
+		"message":  "User registered successfully",
+		"username": req.Username,
+	})
+}

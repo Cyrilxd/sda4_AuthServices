@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/auth/register", handlers.RegisterUserHandler)
 	http.HandleFunc("/auth/token", handlers.GenerateTokenHandler)
 	http.HandleFunc("/auth/validate", handlers.ValidateTokenHandler)
 	http.HandleFunc("/auth/login", handlers.LoginHandler)
