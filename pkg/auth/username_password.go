@@ -14,6 +14,7 @@ func RegisterUser(username, password string) error {
 		return err
 	}
 	users[username] = string(hashedPassword)
+
 	return nil
 }
 

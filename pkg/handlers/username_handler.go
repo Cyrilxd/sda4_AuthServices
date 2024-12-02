@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"cloudservices/pkg/auth"
+	"cloudservices/pkg/middleware"
 	"encoding/json"
 	"net/http"
 )
@@ -27,9 +28,21 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // ProfileHandler returns user profile for authenticated users
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
-	// Simulated profile data
+	username, err := middleware.RequireUsernameContext(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	// Simulated user profile data (replace with actual user data lookup if needed)
+	profile := map[string]string{
+		"username": username,
+		"role":     "user", // Example: you could dynamically retrieve the user's role
+	}
+
+	// Respond with the user's profile
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"username": "test_user", "role": "admin"})
+	json.NewEncoder(w).Encode(profile)
 }
 
 // RegisterUserHandler handles user registration requests

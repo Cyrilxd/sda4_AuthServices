@@ -34,11 +34,8 @@ func TokenAuthMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		// Store claims in the request context for use in downstream handlers
-		ctx := r.Context()
-		ctx = context.WithValue(ctx, "username", claims.Username)
-
-		// Pass the request to the next handler
+		// Store claims in the request context
+		ctx := context.WithValue(r.Context(), "username", claims.Username)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
