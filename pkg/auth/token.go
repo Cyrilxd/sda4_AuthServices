@@ -6,37 +6,43 @@ import (
 	"time"
 )
 
-var jwtKey = []byte("secret-key") // Use environment variables for production
+var jwtSecret = []byte("topSecret") // Use environment variables for production
 
 type Claims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
-// GenerateToken generates a JWT token with claims
+// GenerateToken erstellt ein JWT für den Benutzer
 func GenerateToken(username string) (string, error) {
-	expirationTime := time.Now().Add(1 * time.Hour)
-
-	claims := &Claims{
-		Username: username,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: jwt.NewNumericDate(expirationTime).Unix(),
-			IssuedAt:  jwt.NewNumericDate(time.Now()).Unix(),
-		},
+	claims := jwt.MapClaims{
+		"username": username,
+		"exp":      time.Now().Add(24 * time.Hour).Unix(), // Token läuft nach 24 Stunden ab
 	}
-
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtKey)
+	return token.SignedString(jwtSecret)
 }
 
-// ValidateToken validates a JWT token
+// ValidateToken validates a JWT token and returns the claims
 func ValidateToken(tokenString string) (*Claims, error) {
 	claims := &Claims{}
+	// Parse the token with claims
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
+		return jwtSecret, nil
 	})
-	if err != nil || !token.Valid {
+	if err != nil {
 		return nil, errors.New("invalid token")
 	}
+
+	// Ensure the token is valid
+	if !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+
+	// Additional checks: Ensure required claims are present
+	if claims.Username == "" {
+		return nil, errors.New("invalid token: username missing")
+	}
+
 	return claims, nil
 }

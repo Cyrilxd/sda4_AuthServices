@@ -2,27 +2,60 @@ package auth
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
+	"log"
+	"sync"
 )
 
-var users = map[string]string{} // Simulated database
+var (
+	// ErrUserAlreadyExists is returned when attempting to add a duplicate user
+	ErrUserAlreadyExists = errors.New("user already exists")
+)
 
-// RegisterUser stores a hashed password for a username
-func RegisterUser(username, password string) error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
+// User represents a user in the system
+type User struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Token    string `json:"token,omitempty"`
+}
+
+// Global in-memory user store and mutex
+var (
+	users = make(map[string]*User)
+	mu    sync.Mutex
+)
+
+// GetUser retrieves a user by username
+func GetUser(username string) (*User, bool) {
+	mu.Lock()
+	defer mu.Unlock()
+
+	user, exists := users[username]
+	return user, exists
+}
+
+// AddUser adds a new user to the global store
+func AddUser(user *User) error {
+	mu.Lock()
+	defer mu.Unlock()
+
+	if _, exists := users[user.Username]; exists {
+		return ErrUserAlreadyExists
 	}
-	users[username] = string(hashedPassword)
+
+	users[user.Username] = user
+	log.Printf("User added: %+v\n", user)
 
 	return nil
 }
 
-// Authenticate checks the username and password
-func Authenticate(username, password string) error {
-	storedPassword, exists := users[username]
-	if !exists {
-		return errors.New("user not found")
+// ListUsers returns a copy of all users (for debugging or inspection)
+func ListUsers() []*User {
+	mu.Lock()
+	defer mu.Unlock()
+
+	userList := make([]*User, 0, len(users))
+	for _, user := range users {
+		userList = append(userList, user)
 	}
-	return bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(password))
+	return userList
 }
