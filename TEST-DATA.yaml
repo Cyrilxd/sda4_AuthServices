@@ -1,0 +1,230 @@
+_type: export
+__export_format: 4
+__export_date: 2024-12-19T21:08:32.917Z
+__export_source: insomnia.desktop.app:v10.2.0
+resources:
+  - _id: req_1efa16e67dee481cb4b4bed4a24ec917
+    parentId: fld_b906625242d84e77917f525c787df998
+    modified: 1734642393975
+    created: 1733559032942
+    url: http://localhost:8080/auth/register
+    name: 1) Register Basic Auth (just send)
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username":"hallo",
+        	"password":"hallo"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication: {}
+    metaSortKey: -1733559258455
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_b906625242d84e77917f525c787df998
+    parentId: wrk_49544a02cf514431a745f6f0921d3bfc
+    modified: 1734642379007
+    created: 1733559224051
+    name: Basic Auth
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1733559285102
+    environmentType: kv
+    _type: request_group
+  - _id: wrk_49544a02cf514431a745f6f0921d3bfc
+    parentId: null
+    modified: 1734641721294
+    created: 1734641721294
+    name: App Testing
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_63e56ea329d447dd9b982223897cd3df
+    parentId: fld_b906625242d84e77917f525c787df998
+    modified: 1734642439166
+    created: 1734641803605
+    url: http://localhost:8080/auth/login
+    name: 2) Login Basic Auth Wrong Credentials
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "fdljakjs",
+        	"password": "hallo"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication:
+      type: none
+    metaSortKey: -1733559258405
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a3539da07f6f4356884f68d21cca952e
+    parentId: fld_b906625242d84e77917f525c787df998
+    modified: 1734642426115
+    created: 1733559148570
+    url: http://localhost:8080/auth/login
+    name: 3) Login Basic Auth (you will receive a token after login, copy it)
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "hallo",
+        	"password": "hallo"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication:
+      type: none
+    metaSortKey: -1733559258355
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1b5cb03bac574ea3a9a88f50088dfdef
+    parentId: fld_809707c5e68a46e1a075884d751972aa
+    modified: 1734642452679
+    created: 1733559296939
+    url: http://localhost:8080/auth/validate?token=<PASTE-YOUR-TOKEN>
+    name: 4) GetUsername / Validate Token (paste token in URL)
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication:
+      type: none
+    metaSortKey: -1733559475131
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_809707c5e68a46e1a075884d751972aa
+    parentId: wrk_49544a02cf514431a745f6f0921d3bfc
+    modified: 1734014628776
+    created: 1733559285002
+    name: TokenAuth
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1733559285002
+    environmentType: kv
+    _type: request_group
+  - _id: req_77bf1a16f6cc43a6a5059f2876712db8
+    parentId: fld_809707c5e68a46e1a075884d751972aa
+    modified: 1734642464401
+    created: 1733734859961
+    url: http://localhost:8080/list-users
+    name: "5) Get User List (paste your token into the field: token, prefix can be
+      empty)"
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication:
+      type: bearer
+      token: <YOUR-TOKEN>
+    metaSortKey: -1733559475031
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cb3b314cdf324a98a987be4aa79dc428
+    parentId: fld_809707c5e68a46e1a075884d751972aa
+    modified: 1734642474445
+    created: 1733559474931
+    url: http://localhost:8080/auth/token/profile
+    name: "6) GetProfile (paste your token into the field: token, prefix can be
+      empty)"
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.2.0
+    authentication:
+      type: bearer
+      token: <YOUR-TOKEN>
+    metaSortKey: -1733559474931
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_da0a2060f8e148a59945c83ca11d4eaf
+    parentId: wrk_49544a02cf514431a745f6f0921d3bfc
+    modified: 1733558755132
+    created: 1732527073880
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1732527073880
+    _type: environment
+  - _id: jar_a129d68471864f969b1f9b9c5de3b11e
+    parentId: wrk_49544a02cf514431a745f6f0921d3bfc
+    modified: 1733558755218
+    created: 1733558755218
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar

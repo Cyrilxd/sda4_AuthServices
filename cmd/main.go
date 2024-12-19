@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// Define routes
 func main() {
 	http.HandleFunc("/auth/register", handlers.RegisterUserHandler)
 	http.HandleFunc("/auth/validate", handlers.ValidateTokenHandler)
