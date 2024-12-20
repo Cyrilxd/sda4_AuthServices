@@ -1,5 +1,5 @@
 
-# SDA4 Authentication Services Group X
+# SDA4 Authentication Services Group B
 
 Welcome to the SDA4 Authentication Services! This repository contains a Go-based authentication service. Follow the steps below to set up and run the application.
 
@@ -41,7 +41,7 @@ Welcome to the SDA4 Authentication Services! This repository contains a Go-based
 ## Testing the Application
 
 ### 1. Import Request Collection
-- Import the file `SDA_AuthApp_Request.yaml` into your **Insomnia** application (or any API testing tool of your choice).
+- Import the file `TEST-DATA.yaml` into your **Insomnia** application (or any API testing tool of your choice).
 
 ### 2. Make API Requests
 - Use the imported collection to test the application's endpoints.
