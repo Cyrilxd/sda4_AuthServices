@@ -41,7 +41,7 @@ Welcome to the SDA4 Authentication Services! This repository contains a Go-based
 ## Testing the Application
 
 ### 1. Import Request Collection
-- Import the file `TEST-DATA.yaml` into your **Insomnia** application (or any API testing tool of your choice).
+- Import the file `TEST-DATA.yaml` into your API application of chocie (**Insomnia**).
 
 ### 2. Make API Requests
 - Use the imported collection to test the application's endpoints.
